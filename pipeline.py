@@ -1,27 +1,49 @@
-from filters.keywords import main as filter_keywords
-from filters.past_verbs import main as filter_past_verbs
-from filters.present_verbs import main as filter_present_verbs
-from scrapers.caraguatatuba import main as caraguatatuba_scraper
-from scrapers.sao_sebastiao import main as sao_sebastiao_scraper
-from scrapers.ubatuba import main as ubatuba_scraper
+import asyncio
+import logging
+
+from constants import PAST_VERBS, PRESENT_VERBS
+from services.filter_service import BaseFilterService
+from services.scrapers.caraguatatuba import CaraguatatubaScraper
+from services.scrapers.sao_sebastiao import SaoSebastiaoScraper
+from services.scrapers.ubatuba import UbatubaScraper
 
 
-def execute_pipeline(term: str = "Educação Ambiental"):
-    # Step 1: Scraping data
-    caraguatatuba_source = caraguatatuba_scraper(term)
-    sao_sebastiao_source = sao_sebastiao_scraper(term)
-    ubatuba_source = ubatuba_scraper(term)
+async def producer(queue: asyncio.Queue, scraper, name: str, term: str):
+    """Executa um scraper e coloca os itens na fila"""
+    resultados = scraper.scrape(term)
+    logging.info(f"[{name}] Produtor carregou {len(resultados)} itens.")
+    for item in resultados:
+        await queue.put(item)
+    await queue.join()
 
-    # Step 2: Filtering Keywords
-    for data_source in (
-        ("caraguatatuba", caraguatatuba_source),
-        ("ubatuba", ubatuba_source),
-        ("sao_sebastiao", sao_sebastiao_source),
-    ):
-        filter_keywords(data_source[0], data_source[1], False)
-        filter_past_verbs(data_source[0], data_source[1], False)
-        filter_present_verbs(data_source[0], data_source[1], False)
+
+async def execute_pipeline(term: str = "Educação Ambiental"):
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(message)s")
+
+    queue = asyncio.Queue()
+
+    # Definição dos filtros
+    keyword_filter = BaseFilterService(
+        "KeywordFilter", ["escola", "parque", "comunidade"], queue
+    )
+    past_filter = BaseFilterService("PastVerbsFilter", PAST_VERBS, queue)
+    present_filter = BaseFilterService("PresentVerbsFilter", PRESENT_VERBS, queue)
+
+    # Lista de scrapers (Strategy)
+    scrapers = [
+        ("caraguatatuba", CaraguatatubaScraper()),
+        ("sao_sebastiao", SaoSebastiaoScraper()),
+        ("ubatuba", UbatubaScraper()),
+    ]
+
+    # Roda tudo junto: produtores + consumidores
+    await asyncio.gather(
+        *(producer(queue, scraper, name, term) for name, scraper in scrapers),
+        keyword_filter.run(),
+        past_filter.run(),
+        present_filter.run(),
+    )
 
 
 if __name__ == "__main__":
-    execute_pipeline()
+    asyncio.run(execute_pipeline())

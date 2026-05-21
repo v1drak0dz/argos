@@ -206,10 +206,7 @@ class SaoSebastiaoScraper(ScraperStrategy):
 
         return resultados
 
-    def scrape(
-        self,
-        search_term: str,
-    ) -> list[Noticia]:
+    def scrape(self, search_term: str, profundidade: int) -> list[Noticia]:
 
         search_url = (
             "https://www.saosebastiao.sp.gov.br/noticia-lista.asp?idTitulo="
@@ -228,7 +225,9 @@ class SaoSebastiaoScraper(ScraperStrategy):
 
         noticias = self.__get_news(primeira_pagina)
 
-        for i in range(2, pagination + 1):
+        for i in range(
+            2, (pagination if pagination < profundidade else profundidade) + 1
+        ):
             page = self.__get_page(
                 search_url,
                 i,

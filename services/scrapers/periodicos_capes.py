@@ -101,7 +101,7 @@ class PeriodicosCapesScraper(ScraperStrategy):
             self.logger.debug("Notícia '%s' adicionada.", titulo)
         return resultados
 
-    def scrape(self, search_term: str) -> list[Noticia]:
+    def scrape(self, search_term: str, profundidade: int) -> list[Noticia]:
         self.logger.info("Iniciando scraping sobre '%s'", search_term)
 
         primeira_pagina = self.__get_page(
@@ -109,7 +109,9 @@ class PeriodicosCapesScraper(ScraperStrategy):
         )
         pagination = self.__check_for_pagination(primeira_pagina)
         noticias = self.__get_news(primeira_pagina)
-        for i in range(2, pagination + 1):
+        for i in range(
+            2, (pagination if pagination < profundidade else profundidade) + 1
+        ):
             page = self.__get_page(self.SEARCH_URL.format(quote_plus(search_term)), i)
             news = self.__get_news(page)
             if news:

@@ -211,10 +211,7 @@ class CaraguatatubaScraper(ScraperStrategy):
 
         return resultados
 
-    def scrape(
-        self,
-        search_term: str,
-    ) -> list[Noticia]:
+    def scrape(self, search_term: str, profundidade: int) -> list[Noticia]:
 
         search_url = "https://www.caraguatatuba.sp.gov.br/pmc/page/{}/?s=" + quote_plus(
             search_term
@@ -231,7 +228,9 @@ class CaraguatatubaScraper(ScraperStrategy):
 
         noticias = self.__get_news(primeira_pagina)
 
-        for i in range(2, pagination + 1):
+        for i in range(
+            2, (pagination + 1 if pagination < profundidade else profundidade + 1)
+        ):
             page = self.__get_page(
                 search_url,
                 i,

@@ -2,49 +2,88 @@ import asyncio
 import json
 import os
 import uuid
+from dataclasses import asdict
+from typing import Any
 
 import uvicorn
-from fastapi import APIRouter, FastAPI
+from fastapi import APIRouter, FastAPI, Request
 from fastapi.exceptions import HTTPException
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 
 from services.scrapers.scraper_service import ScraperService
 
 storage_file = "job_history.json"
 
-tasks: dict = {}
+tasks: dict[str, dict[str, Any]] = {}
 
 tasks_lock = asyncio.Lock()
 
-background_tasks = set()
+background_tasks: set[asyncio.Task] = set()
 
-if os.path.exists(storage_file):
+job_semaphore = asyncio.Semaphore(2)
+
+scraper_service = ScraperService()
+
+
+def load_tasks():
+    global tasks
+
+    if not os.path.exists(storage_file):
+        tasks = {}
+        return
+
+    try:
+        with open(
+            storage_file,
+            "r",
+            encoding="utf-8",
+        ) as f:
+            tasks = json.load(f)
+
+    except (
+        json.JSONDecodeError,
+        OSError,
+    ):
+        tasks = {}
+
+
+def save_tasks_snapshot(
+    snapshot: dict,
+):
+    temp_file = f"{storage_file}.tmp"
+
     with open(
-        storage_file,
-        "r",
-        encoding="utf-8",
-    ) as r:
-        try:
-            tasks = json.load(r)
-
-        except json.JSONDecodeError:
-            tasks = {}
-
-
-def save_tasks():
-
-    with open(
-        storage_file,
+        temp_file,
         "w",
         encoding="utf-8",
     ) as f:
         json.dump(
-            tasks,
+            snapshot,
             f,
             ensure_ascii=False,
             indent=4,
         )
 
+    os.replace(
+        temp_file,
+        storage_file,
+    )
+
+
+async def persist_tasks():
+    async with tasks_lock:
+        snapshot = dict(tasks)
+
+    await asyncio.to_thread(
+        save_tasks_snapshot,
+        snapshot,
+    )
+
+
+load_tasks()
 
 app = FastAPI()
 
@@ -52,61 +91,97 @@ jobs_routes = APIRouter(prefix="/jobs")
 
 status_routes = APIRouter(prefix="/status")
 
+templates = Jinja2Templates(directory="templates")
+
+app.mount(
+    "/static",
+    StaticFiles(directory="static"),
+    name="static",
+)
+
+
+@app.get(
+    "/",
+    response_class=HTMLResponse,
+)
+async def home(
+    request: Request,
+):
+    return templates.TemplateResponse(
+        request,
+        name="index.html",
+    )
+
 
 class JobRequest(BaseModel):
     title: str
     sites: list[str]
+    profundidade: int = 3
 
 
-async def persist_tasks():
-    await asyncio.to_thread(save_tasks)
+class JobResponse(BaseModel):
+    title: str
+    status: str
+    parameters: dict
+    id: int
+    job_hash: str
+    data: list
+    error: str | None = None
+
+
+async def update_job(
+    job: dict,
+    **kwargs,
+):
+    async with tasks_lock:
+        job.update(kwargs)
+
+    await persist_tasks()
 
 
 async def run_job(
     title: str,
     sites: list[str],
+    profundidade: int,
     job: dict,
 ):
+    async with job_semaphore:
+        try:
+            await update_job(
+                job,
+                status="processing",
+            )
 
-    async with tasks_lock:
-        job["status"] = "processing"
+            data = await asyncio.to_thread(
+                scraper_service.process_scraper, title, sites, profundidade
+            )
 
-        await persist_tasks()
+            serialized_data = [asdict(item) for item in data]
 
-    scraper_service = ScraperService()
+            await update_job(
+                job,
+                status="completed",
+                data=serialized_data,
+            )
 
-    try:
-        data = await asyncio.to_thread(
-            scraper_service.process_scraper,
-            title,
-            sites,
-        )
+            return serialized_data
 
-        async with tasks_lock:
-            job["status"] = "completed"
+        except Exception as ex:
+            await update_job(
+                job,
+                status="failed",
+                error=str(ex),
+            )
 
-            job["data"] = data
-
-            await persist_tasks()
-
-        return data
-
-    except Exception as ex:
-        async with tasks_lock:
-            job["status"] = "failed"
-
-            job["error"] = str(ex)
-
-            await persist_tasks()
-
-        raise
+            raise
 
 
-@jobs_routes.post("/")
+@jobs_routes.post(
+    "/",
+)
 async def create_job(
     job: JobRequest,
 ):
-
     job_hash = str(uuid.uuid4())
 
     async with tasks_lock:
@@ -119,42 +194,67 @@ async def create_job(
         )
 
         tasks[job_hash] = {
-            "status": "created",
-            "parameters": {
-                "sites": job.sites,
-            },
             "title": job.title,
+            "status": "created",
+            "parameters": {"sites": job.sites, "profundidade": job.profundidade},
             "id": job_id,
             "job_hash": job_hash,
             "data": [],
+            "error": None,
         }
 
-        await persist_tasks()
+        created_job = tasks[job_hash]
+
+    await persist_tasks()
 
     task = asyncio.create_task(
         run_job(
             job.title,
             job.sites,
-            tasks[job_hash],
+            job.profundidade,
+            created_job,
         )
     )
 
     background_tasks.add(task)
 
-    task.add_done_callback(background_tasks.discard)
+    task.add_done_callback(
+        background_tasks.discard,
+    )
 
     return {
         "status": "created",
-        "job_id": job_hash,
-        "id": job_id,
+        "job_hash": job_hash,
+        "job_id": job_id,
         "data": [],
     }
 
 
-@jobs_routes.get("/{id}")
-async def get_job(id: str):
+@jobs_routes.get(
+    "/",
+    response_model=list[JobResponse],
+)
+async def get_jobs():
+    async with tasks_lock:
+        jobs = list(tasks.values())
 
-    job = tasks.get(id)
+    jobs.sort(
+        key=lambda x: x["id"],
+        reverse=True,
+    )
+
+    return jobs
+
+
+@jobs_routes.get(
+    "/{id}",
+    response_model=JobResponse,
+)
+async def get_job(
+    id: str,
+):
+    async with tasks_lock:
+        job = tasks.get(id)
 
     if not job:
         raise HTTPException(
@@ -165,12 +265,14 @@ async def get_job(id: str):
     return job
 
 
-@status_routes.get("/{id}")
+@status_routes.get(
+    "/{id}",
+)
 async def get_job_status(
     id: str,
 ):
-
-    job = tasks.get(id)
+    async with tasks_lock:
+        job = tasks.get(id)
 
     if not job:
         raise HTTPException(
@@ -184,12 +286,14 @@ async def get_job_status(
     }
 
 
-@status_routes.get("/completed/{id}")
+@status_routes.get(
+    "/completed/{id}",
+)
 async def is_job_done(
     id: str,
 ):
-
-    job = tasks.get(id)
+    async with tasks_lock:
+        job = tasks.get(id)
 
     if not job:
         raise HTTPException(

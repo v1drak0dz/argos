@@ -1,10 +1,12 @@
 from abc import ABC, abstractmethod
-from fake_useragent import FakeUserAgent
-import requests
 from typing import List
+
+import requests
+from fake_useragent import FakeUserAgent
 
 from models.noticia import Noticia
 from services.logging.logger_service import LoggerService
+
 
 class ScraperStrategy(ABC):
     """
@@ -28,26 +30,21 @@ class ScraperStrategy(ABC):
 
         log_file = logger_name.replace("Scraper", "").lower()
 
-        self.logger = LoggerService.get_logger(name=logger_name, log_file=f'{log_file}.log')
+        self.logger = LoggerService.get_logger(
+            name=logger_name, log_file=f"{log_file}.log"
+        )
 
     def _get(self, url: str, **kwargs) -> requests.Response:
-        self.logger.debug(
-            "GET %s",
-            url
-        )
+        self.logger.debug("GET %s", url)
 
-        response = self.session.get(
-            url,
-            timeout=15,
-            **kwargs
-        )
+        response = self.session.get(url, timeout=15, **kwargs)
 
         response.raise_for_status()
 
         return response
 
     @abstractmethod
-    def scrape(self, search_term: str) -> List[Noticia]:
+    def scrape(self, search_term: str, profundidade: int) -> List[Noticia]:
         """
         Executa o scraping para o termo de busca fornecido.
 

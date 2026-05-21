@@ -12,15 +12,259 @@
         "data": [],
         "error": "ScraperService.process_scraper() takes 3 positional arguments but 4 were given"
     },
-    "158df5fd-6848-4010-81a5-94b7621bc36e": {
-        "status": "failed",
+    "c96431b9-7c1e-4032-8575-3a5af84ffe10": {
+        "title": "Educação Ambiental",
+        "status": "completed",
         "parameters": {
             "sites": [
                 "caraguatatuba"
-            ]
+            ],
+            "profundidade": 3
         },
-        "title": "Educação Ambiental",
         "id": 2,
-        "job_hash": "158df5fd-6848-4010-81a5-94b7621bc36e",
+        "job_hash": "c96431b9-7c1e-4032-8575-3a5af84ffe10",
         "data": [
-            
+            {
+                "titulo": "Estudantes da rede municipal participam de ações de educação ambiental durante gincana “Descarte Certo de Resíduos Recicláveis”",
+                "data": "20/05/2026",
+                "ano": "2026",
+                "link": "https://www.caraguatatuba.sp.gov.br/pmc/2026/05/estudantes-da-rede-municipal-participam-de-acoes-de-educacao-ambiental-durante-gincana-descarte-certo-de-residuos-reciclaveis/",
+                "resumo": "A Semana do Meio Ambiente começa no dia 2 de junho com uma agenda que reúne atividades em escolas, espaços públicos e áreas ambientais de Caraguatatuba. Nos espaços educacionais, a programação conta com a gincana “Descarte Certo de Resíduos Recicláveis”, no Cide Tinga e nos Ciases do Travessão e Sumaré,",
+                "origem": "Caraguatatuba"
+            },
+            {
+                "titulo": "Viveiro Municipal de Caraguatatuba recebe alunos do IFSP em atividade de educação ambiental",
+                "data": "19/05/2026",
+                "ano": "2026",
+                "link": "https://www.caraguatatuba.sp.gov.br/pmc/2026/05/viveiro-municipal-de-caraguatatuba-recebe-alunos-do-ifsp-em-atividade-de-educacao-ambiental/",
+                "resumo": "O Viveiro Municipal de Caraguatatuba “Pedro Gonçalves Leite” recebeu, na última quinta-feira (14), cerca de 40 alunos do curso técnico em Meio Ambiente do Instituto Federal de Educação Ciência e Tecnologia de São Paulo – Campus Caraguatatuba. A visita educativa foi voltada à conscientização ambiental e ao conhecimento sobre produção",
+                "origem": "Caraguatatuba"
+            },
+            {
+                "titulo": "Projeto “Seja Amigo do Parque” garante novos computadores para educação ambiental no Parque Juqueriquerê",
+                "data": "08/05/2026",
+                "ano": "2026",
+                "link": "https://www.caraguatatuba.sp.gov.br/pmc/2026/05/projeto-seja-amigo-do-parque-garante-novos-computadores-para-educacao-ambiental-no-parque-juqueriquere/",
+                "resumo": "O Parque Natural Municipal do Juqueriquerê, em Caraguatatuba, recebeu nesta quinta-feira (7) dois computadores completos por meio das parcerias firmadas no projeto “Seja Amigo do Parque”, da ONG Maranata. A iniciativa busca fortalecer as ações de educação ambiental, sustentabilidade e desenvolvimento socioambiental no município. Os equipamentos foram destinados à Sala",
+                "origem": "Caraguatatuba"
+            },
+            {
+                "titulo": "Viveiro Municipal de Caraguatatuba abre espaço para atividades de educação ambiental",
+                "data": "06/03/2026",
+                "ano": "2026",
+                "link": "https://www.caraguatatuba.sp.gov.br/pmc/2026/03/viveiro-municipal-de-caraguatatuba-abre-espaco-para-atividades-de-educacao-ambiental/",
+                "resumo": "O Viveiro Municipal de Caraguatatuba “Pedro Gonçalves Leite” se consolida como um importante espaço de educação ambiental no município e está disponível para receber escolas, faculdades e projetos que desejam desenvolver atividades fora da sala de aula. O local oferece estrutura para ações educativas, oficinas, projetos científicos e atividades voltadas",
+                "origem": "Caraguatatuba"
+            },
+            {
+                "titulo": "“Verão no Clima” reúne mais de 650 pessoas em Caraguatatuba com ações de educação ambiental e cultural",
+                "data": "09/02/2026",
+                "ano": "2026",
+                "link": "https://www.caraguatatuba.sp.gov.br/pmc/2026/02/verao-no-clima-reune-mais-de-650-pessoas-em-caraguatatuba-com-acoes-de-educacao-ambiental-e-cultural/",
+                "resumo": "Mais de 650 pessoas participaram, no último sábado (7), do evento “Verão no Clima” na Praia do Indaiá, em Caraguatatuba. A iniciativa foi voltada à promoção da educação ambiental, do lazer e da conscientização sobre a importância da preservação dos ecossistemas costeiros. A programação contou com diversas atividades voltadas à",
+                "origem": "Caraguatatuba"
+            },
+            {
+                "titulo": "“Verão no Clima” chega a Caraguatatuba com educação ambiental e atrações gratuitas no dia 7 de fevereiro",
+                "data": "02/02/2026",
+                "ano": "2026",
+                "link": "https://www.caraguatatuba.sp.gov.br/pmc/2026/02/verao-no-clima-chega-a-caraguatatuba-com-educacao-ambiental-e-atracoes-gratuitas-no-dia-7-de-fevereiro/",
+                "resumo": "Caraguatatuba será palco, no próximo sábado (7) do evento “Verão no Clima”, que tem como objetivo promover educação ambiental, lazer e conscientização sobre a importância da preservação dos ecossistemas costeiros. A ação será realizada das 5h30 às 16h, na Avenida Geraldo Nogueira da Silva, entre os números 549 e 717,",
+                "origem": "Caraguatatuba"
+            },
+            {
+                "titulo": "Programa de educação ambiental leva conscientização sobre fauna doméstica e silvestre a escolas lindeiras de Caraguatatuba",
+                "data": "24/10/2025",
+                "ano": "2025",
+                "link": "https://www.caraguatatuba.sp.gov.br/pmc/2025/10/programa-de-educacao-ambiental-leva-conscientizacao-sobre-fauna-domestica-e-silvestre-a-escolas-lindeiras-de-caraguatatuba/",
+                "resumo": "Os alunos da EMEI/EMEF Prof. Lúcio Jacinto dos Santos, no bairro Tinga, participaram das atividades do Programa de Educação Ambiental promovido em parceria com o Grupo Tamoios, na quinta-feira (23). As apresentações envolveram estudantes das chamadas escolas lindeiras — instituições públicas situadas próximas à Rodovia dos Tamoios, que recebem ações",
+                "origem": "Caraguatatuba"
+            },
+            {
+                "titulo": "Preservação da área verde em Caraguatatuba é tema do Programa de Educação Ambiental da Unidade de Gás",
+                "data": "11/06/2025",
+                "ano": "2025",
+                "link": "https://www.caraguatatuba.sp.gov.br/pmc/2025/06/preservacao-da-area-verde-em-caraguatatuba-e-tema-do-programa-de-educacao-ambiental-da-unidade-de-gas/",
+                "resumo": "Caraguatatuba recebe uma série de encontros abertos à comunidade em diferentes bairros a partir da próxima semana. Trata-se do Programa de Educação Ambiental da Unidade de Tratamento de Gás Monteiro Lobato (UTGCA), uma iniciativa da Petrobras que atende a condicionantes ambientais do Instituto Brasileiro do Meio Ambiente e dos Recursos",
+                "origem": "Caraguatatuba"
+            },
+            {
+                "titulo": "Projeto Arborizar une educação ambiental e plantio de árvores nativas em Caraguatatuba",
+                "data": "25/04/2025",
+                "ano": "2025",
+                "link": "https://www.caraguatatuba.sp.gov.br/pmc/2025/04/projeto-arborizar-une-educacao-ambiental-e-plantio-de-arvores-nativas-em-caraguatatuba/",
+                "resumo": "O município dá início a um programa que coloca a arborização urbana no centro das ações ambientais. Trata-se do Projeto Arborizar, que alia ações educativas e plantio de árvores nativas da região. A iniciativa da Secretaria de Urbanismo começa pelas escolas públicas, com foco nos estudantes, e visa estimular o",
+                "origem": "Caraguatatuba"
+            },
+            {
+                "titulo": "Centro de Educação Ambiental do Parque do Juqueriquerê é interditado para reparos",
+                "data": "25/11/2024",
+                "ano": "2024",
+                "link": "https://www.caraguatatuba.sp.gov.br/pmc/2024/11/centro-de-educacao-ambiental-do-parque-do-juqueriquere-e-interditado-para-reparos/",
+                "resumo": "O Centro de Educação Ambiental do Parque Natural Municipal do Juqueriquerê, no Porto Novo, em Caraguatatuba, foi temporariamente interditado para reparos no telhado. A visitação ao parque segue normalmente. Totalmente integrado à natureza, o parque foi construído em uma área de 5.298,17 m² dos 35 mil m² da Unidade de",
+                "origem": "Caraguatatuba"
+            },
+            {
+                "titulo": "Prefeitura de Caraguatatuba marca presença no VI Fórum de Educação Ambiental do Litoral Norte",
+                "data": "24/08/2023",
+                "ano": "2023",
+                "link": "https://www.caraguatatuba.sp.gov.br/pmc/2023/08/prefeitura-de-caraguatatuba-marca-presenca-no-vi-forum-de-educacao-ambiental-do-litoral-norte/",
+                "resumo": "A Prefeitura de Caraguatatuba marcou presença no VI Fórum de Educação Ambiental do Litoral Norte (VI ForEA), realizado na última semana em Ubatuba. O evento contou com a participação da Secretaria de Educação e Secretaria de Meio Ambiente, Agricultura e Pesca. Durante o fórum, Tatiana Scian e Mayara Peixoto, representantes",
+                "origem": "Caraguatatuba"
+            },
+            {
+                "titulo": "Secretaria de Educação abre inscrições para voluntariado em projetos de educação ambiental nas escolas",
+                "data": "21/03/2023",
+                "ano": "2023",
+                "link": "https://www.caraguatatuba.sp.gov.br/pmc/2023/03/secretaria-de-educacao-abre-inscricoes-para-voluntariado-em-projetos-de-educacao-ambiental-nas-escolas/",
+                "resumo": "A Secretaria de Educação de Caraguatatuba, por meio do setor de Projetos de Educação Ambiental, abriu inscrições para o Programa de Voluntariado para o ano letivo de 2023. As inscrições são voltadas para estudantes de cursos técnicos, e graduação nas áreas de pedagogia, ciências biológicas, humanas, turismo, engenharia ambiental, gestão",
+                "origem": "Caraguatatuba"
+            },
+            {
+                "titulo": "‘Caraguá Feliz em Preservar’: campanha intensifica trabalhos de educação ambiental na Arena Verão",
+                "data": "06/02/2023",
+                "ano": "2023",
+                "link": "https://www.caraguatatuba.sp.gov.br/pmc/2023/02/caragua-feliz-em-preservar-campanha-intensifica-trabalhos-de-educacao-ambiental-na-arena-verao/",
+                "resumo": "A Secretaria de Meio Ambiente, Agricultura e Pesca intensificou as ações de educação ambiental referente à campanha ‘Caraguá Feliz em Preservar’, e abordou em torno de 300 pessoas somente no final de semana, durante evento da Arena Verão Esportiva. O trabalho é realizado de forma lúdica e criativa, sempre com",
+                "origem": "Caraguatatuba"
+            },
+            {
+                "titulo": "Equipes de educação ambiental realizam intercâmbio de experiências no Parque Estadual da Ilha Anchieta",
+                "data": "26/01/2023",
+                "ano": "2023",
+                "link": "https://www.caraguatatuba.sp.gov.br/pmc/2023/01/equipes-de-educacao-ambiental-realizam-intercambio-de-experiencias-no-parque-estadual-da-ilha-anchieta/",
+                "resumo": "Equipes das Secretarias de Meio Ambiente, Agricultura e Pesca e de Educação de Caraguatatuba participaram na última quarta-feira (24), de uma visita técnica nas dependências do Parque Estadual da Ilha Anchieta, com o objetivo de conhecer as estruturas e atividades de educação ambiental, dos programas de uso público, voluntariado, pesquisa",
+                "origem": "Caraguatatuba"
+            },
+            {
+                "titulo": "Prefeitura inicia campanha ‘Caraguá Feliz em Preservar’ com ações de educação ambiental na Prainha",
+                "data": "29/12/2022",
+                "ano": "2022",
+                "link": "https://www.caraguatatuba.sp.gov.br/pmc/2022/12/prefeitura-inicia-campanha-caragua-feliz-em-preservar-com-acoes-de-educacao-ambiental-na-prainha/",
+                "resumo": "A equipe selecionada pela Prefeitura de Caraguatatuba para atuar na campanha ‘Caraguá Feliz em Preservar’, iniciou os trabalhos de educação ambiental na manhã desta quinta-feira (28), na Prainha, um dos principais pontos turísticos da cidade. Com objetivo de orientar munícipes e turistas para medidas conscientes neste verão, a ação conta",
+                "origem": "Caraguatatuba"
+            },
+            {
+                "titulo": "Moradores do Residencial Getuba participam de curso sobre educação ambiental",
+                "data": "27/09/2022",
+                "ano": "2022",
+                "link": "https://www.caraguatatuba.sp.gov.br/pmc/2022/09/moradores-do-residencial-getuba-participam-de-curso-sobre-educacao-ambiental/",
+                "resumo": "No mês em que se comemora a chegada da Primavera, moradores do Residencial Getuba, na região norte de Caraguatatuba, tiveram a oportunidade de participar de mais um curso oferecido pela Prefeitura de Caraguatatuba, por meio da Secretaria de Habitação, em parceria com o Serviço Social da Indústria (Sesi) de São",
+                "origem": "Caraguatatuba"
+            },
+            {
+                "titulo": "Projeto em parceria com a Sabesp desenvolve aulas práticas de Educação Ambiental",
+                "data": "05/09/2022",
+                "ano": "2022",
+                "link": "https://www.caraguatatuba.sp.gov.br/pmc/2022/09/projeto-em-parceria-com-a-sabesp-desenvolve-aulas-praticas-de-educacao-ambiental/",
+                "resumo": "Estudantes de quatro escolas da rede municipal de Caraguatatuba estão participando de um projeto piloto realizado através de uma parceria entre a Prefeitura Municipal, por meio do setor de Projetos da Secretaria de Educação, e a Sabesp. Iniciado no 1º semestre letivo, o ‘Educa Sabesp’ desenvolve atividades de educação ambiental",
+                "origem": "Caraguatatuba"
+            },
+            {
+                "titulo": "Caraguatatuba desenvolve cadernos sobre educação ambiental e capacita professores",
+                "data": "16/08/2022",
+                "ano": "2022",
+                "link": "https://www.caraguatatuba.sp.gov.br/pmc/2022/08/caraguatatuba-desenvolve-cadernos-sobre-educacao-ambiental-e-capacita-professores/",
+                "resumo": "A Prefeitura Municipal de Caraguatatuba, por meio da Secretaria de Educação, apresentou nos dias 4 e 11 de agosto as duas cartilhas de educação ambiental desenvolvidas pela pasta em parceria com o Conselho e Secretaria de Meio Ambiente. A apresentação do material foi feita durante a capacitação de 30 educadores",
+                "origem": "Caraguatatuba"
+            },
+            {
+                "titulo": "Prefeitura de Caraguatatuba investe em diversas atividades de educação ambiental",
+                "data": "03/06/2022",
+                "ano": "2022",
+                "link": "https://www.caraguatatuba.sp.gov.br/pmc/2022/06/prefeitura-de-caraguatatuba-investe-em-diversas-atividades-de-educacao-ambiental/",
+                "resumo": "Nesta sexta-feira (3) é comemorado o Dia Nacional da Educação Ambiental. Em alusão à data, a Prefeitura de Caraguatatuba, por meio da Secretaria de Meio Ambiente, Agricultura e Pesca, reforça seu compromisso com o esse assunto tão importante nos dias atuais promovendo durante o ano todo programas e ações sustentáveis",
+                "origem": "Caraguatatuba"
+            },
+            {
+                "titulo": "Cultivo de hortas e praia limpa são atividades de educação ambiental praticadas em Caraguatatuba",
+                "data": "14/12/2021",
+                "ano": "2021",
+                "link": "https://www.caraguatatuba.sp.gov.br/pmc/2021/12/cultivo-de-hortas-e-praia-limpa-sao-atividades-de-educacao-ambiental-praticadas-em-caraguatatuba/",
+                "resumo": "A prática de Educação Ambiental é desenvolvida em todas as etapas de ensino da rede municipal de Caraguatatuba. Atividades como o cultivo de hortas e espaços verdes estão presentes em mais de 30 unidades escolares da rede municipal. Ações com o objetivo de conscientização e educação socioambiental, como os mutirões",
+                "origem": "Caraguatatuba"
+            },
+            {
+                "titulo": "Educação Ambiental: Capacitação sobre hortas educativas prepara educadores da rede municipal de Caraguatatuba",
+                "data": "07/07/2021",
+                "ano": "2021",
+                "link": "https://www.caraguatatuba.sp.gov.br/pmc/2021/07/educacao-ambiental-capacitacao-sobre-hortas-educativas-prepara-educadores-da-rede-municipal-de-caraguatatuba/",
+                "resumo": "A Prefeitura de Caraguatatuba, por meio da Secretaria de Educação, desenvolve ações de educação ambiental em todas as etapas de ensino da rede municipal. Através do Setor de Projetos, em parceria com a Secretaria de Meio Ambiente, Agricultura e Pesca, é realizado o Projeto Hortas Educativas, que tem como objetivo",
+                "origem": "Caraguatatuba"
+            },
+            {
+                "titulo": "Caraguatatuba promove Mês do Ambiente com diversas ações de educação ambiental",
+                "data": "31/05/2021",
+                "ano": "2021",
+                "link": "https://www.caraguatatuba.sp.gov.br/pmc/2021/05/caraguatatuba-promove-mes-do-ambiente-com-diversas-acoes-de-educacao-ambiental/",
+                "resumo": "A Prefeitura de Caraguatatuba, por meio das secretarias de Meio Ambiente, Agricultura e Pesca (SMAAP) e de Educação (Seduc) promovem a partir desta terça-feira (1º/06), uma série de atividades de educação ambiental alusivas ao Dia Mundial do Meio Ambiente, comemorado no dia 5 de junho. A data foi instituída em",
+                "origem": "Caraguatatuba"
+            },
+            {
+                "titulo": "Educação ambiental: programa desenvolve hortas como recurso pedagógico em Caraguatatuba",
+                "data": "30/04/2021",
+                "ano": "2021",
+                "link": "https://www.caraguatatuba.sp.gov.br/pmc/2021/04/educacao-ambiental-programa-desenvolve-hortas-como-recurso-pedagogico-em-caraguatatuba/",
+                "resumo": "A Secretaria Municipal de Educação de Caraguatatuba, por meio do Departamento de Projetos, realizou nesta quinta-feira (29), uma visita técnica em duas unidades escolares definidas para a implantação de hortas educativas, através do Programa de Educação Ambiental (PEA), executado pela Petrobras. O programa visa contribuir para o desenvolvimento da gestão",
+                "origem": "Caraguatatuba"
+            },
+            {
+                "titulo": "Inscrições para curso sobre educação ambiental do CBH- LN encerram nesta quinta-feira (30/7)",
+                "data": "29/07/2020",
+                "ano": "2020",
+                "link": "https://www.caraguatatuba.sp.gov.br/pmc/2020/07/inscricoes-para-curso-sobre-educacao-ambiental-do-cbh-ln-encerram-nesta-quinta-feira-30-7/",
+                "resumo": "O Comitê de Bacias Hidrográficas do Litoral Norte (CBH-LN) está com inscrições abertas, até quinta-feira (30/7), para o curso online gratuito de ‘Cuidadores das Águas: Educação Ambiental e Gestão dos Recursos Hídricos no Litoral Norte de São Paulo’. Interessados devem ser inscrever por meio do endereço eletrônico: https://forms.gle/ogrhAF4K6LPtLdaU8. O curso",
+                "origem": "Caraguatatuba"
+            },
+            {
+                "titulo": "Comitê de Bacias do Litoral Norte abre inscrição para curso voltado para Educação Ambiental",
+                "data": "23/07/2020",
+                "ano": "2020",
+                "link": "https://www.caraguatatuba.sp.gov.br/pmc/2020/07/comite-de-bacias-do-litoral-norte-abre-inscricao-para-curso-voltado-para-educacao-ambiental/",
+                "resumo": "De acordo com um estudo realizado em 2019 pela (ANA) Agência Nacional de Águas e Saneamento Básico que regula as diretrizes da Lei das Águas do Brasil, estima-se que o uso da água deva crescer 24% até 2030, superando a marca de 2,5 milhões de litros por segundo, pois considerando",
+                "origem": "Caraguatatuba"
+            },
+            {
+                "titulo": "Projeto Verão no Clima orienta sobre educação ambiental em praias de Caraguatatuba",
+                "data": "06/01/2020",
+                "ano": "2020",
+                "link": "https://www.caraguatatuba.sp.gov.br/pmc/2020/01/projeto-verao-no-clima-orienta-sobre-educacao-ambiental-em-praias-de-caraguatatuba/",
+                "resumo": "Caraguatatuba inicia na próxima sexta-feira (10/01), o Projeto Verão no Clima, em parceria com a Secretaria Estadual de Infraestrutura e Meio Ambiente. A iniciativa prevê ações de educação ambiental nas praias Martim de Sá e Cocanha até o término do Carnaval. De sexta-feira a domingo, 12 monitores estarão nas praias",
+                "origem": "Caraguatatuba"
+            },
+            {
+                "titulo": "V Fórum Regional de Educação Ambiental do Litoral Norte debate importância do Ecoturismo",
+                "data": "02/10/2019",
+                "ano": "2019",
+                "link": "https://www.caraguatatuba.sp.gov.br/pmc/2019/10/v-forum-regional-de-educacao-ambiental-do-litoral-norte-debate-importancia-do-ecoturismo/",
+                "resumo": "O Ecoturismo no Litoral Norte, aproveitando suas principais características. Este foi um dos temas debatidos dentro do V Fórum Regional de Educação Ambiental (ForEa), realizado em Caraguatatuba na terça e quarta-feira (1º e 2) pelo Comitê de Bacias Hidrográficas do Litoral Norte (CBH-LN), em parceria com as prefeituras de Caraguatatuba,",
+                "origem": "Caraguatatuba"
+            },
+            {
+                "titulo": "Caraguatatuba recebe V Fórum Regional de Educação Ambiental do Litoral Norte",
+                "data": "25/09/2019",
+                "ano": "2019",
+                "link": "https://www.caraguatatuba.sp.gov.br/pmc/2019/09/caraguatatuba-recebe-v-forum-regional-de-educacao-ambiental-do-litoral-norte/",
+                "resumo": "O Teatro Mário Covas será palco do V Fórum Regional de Educação Ambiental do Litoral Norte, o ForEA, nos dias 1° e 2 de outubro. O evento contará com palestras, estandes e mesas de debates com o tema “Turismo Sustentável – boas práticas e soluções para os desafios da sazonalidade”.",
+                "origem": "Caraguatatuba"
+            },
+            {
+                "titulo": "Instituto Supereco promove reunião para transformar sítio Manacá em lugar de educação ambiental",
+                "data": "19/06/2019",
+                "ano": "2019",
+                "link": "https://www.caraguatatuba.sp.gov.br/pmc/2019/06/instituto-supereco-promove-reuniao-para-transformar-sitio-manaca-em-lugar-de-educacao-ambiental/",
+                "resumo": "A manhã de terça feira (18/06) foi marcada pela atividade do Instituto Supereco e equipe da Prefeitura de Caraguatatuba a cerca do planejamento sobre transformar o sítio Manacá, localizado no Pegorelli, região Sul de Caraguatatuba, em um “sítio escola” de educação ambiental. O trabalho faz parte do projeto “Tecendo as",
+                "origem": "Caraguatatuba"
+            },
+            {
+                "titulo": "Projeto de Arborização Urbana é proposta de educação ambiental para alunos em Caraguatatuba",
+                "data": "22/03/2019",
+                "ano": "2019",
+                "link": "https://www.caraguatatuba.sp.gov.br/pmc/2019/03/projeto-de-arborizacao-urbana-e-proposta-de-educacao-ambiental-para-alunos-em-caraguatatuba/",
+                "resumo": "Na tarde da última terça-feira (20/03), foi realizado o plantio de 21 mudas de árvores de seis espécies diferentes, nativas da região, na Escola Estadual Thomaz Ribeiro de Lima, no centro da cidade. A ação faz parte do projeto de arborização urbana, da Prefeitura de Caraguatatuba, sob a coordenação da",
+                "origem": "Caraguatatuba"
+            }
+        ],
+        "error": null
+    }
+}

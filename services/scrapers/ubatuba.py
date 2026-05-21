@@ -225,10 +225,7 @@ class UbatubaScraper(ScraperStrategy):
 
         return resultados
 
-    def scrape(
-        self,
-        search_term: str,
-    ) -> list[Noticia]:
+    def scrape(self, search_term: str, profundidade) -> list[Noticia]:
 
         search_url = "https://www.ubatuba.sp.gov.br/page/{}/?s=" + quote_plus(
             search_term
@@ -245,7 +242,9 @@ class UbatubaScraper(ScraperStrategy):
 
         noticias = self.__get_news(primeira_pagina)
 
-        for i in range(2, pagination + 1):
+        for i in range(
+            2, (pagination if pagination < profundidade else profundidade) + 1
+        ):
             page = self.__get_page(
                 search_url,
                 i,

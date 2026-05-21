@@ -1,9 +1,17 @@
 from pydantic import BaseModel
 
 
-class Job(BaseModel):
+class JobRequest(BaseModel):
     title: str
-    description: str
-    tags: list[str]
-    parameters: dict[str, any]
+    sites: list[str]
+    profundidade: int = 3
+
+
+class JobResponse(BaseModel):
+    title: str
     status: str
+    parameters: dict
+    job_id: int
+    job_hash: str
+    data: list
+    error: str | None = None

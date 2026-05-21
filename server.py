@@ -11,20 +11,15 @@ from fastapi.exceptions import HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from pydantic import BaseModel
 
+from models.job import JobRequest, JobResponse
 from services.scrapers.scraper_service import ScraperService
 
 storage_file = "job_history.json"
-
 tasks: dict[str, dict[str, Any]] = {}
-
 tasks_lock = asyncio.Lock()
-
 background_tasks: set[asyncio.Task] = set()
-
 job_semaphore = asyncio.Semaphore(2)
-
 scraper_service = ScraperService()
 
 
@@ -111,22 +106,6 @@ async def home(
         request,
         name="index.html",
     )
-
-
-class JobRequest(BaseModel):
-    title: str
-    sites: list[str]
-    profundidade: int = 3
-
-
-class JobResponse(BaseModel):
-    title: str
-    status: str
-    parameters: dict
-    id: int
-    job_hash: str
-    data: list
-    error: str | None = None
 
 
 async def update_job(
@@ -265,43 +244,7 @@ async def get_job(
     return job
 
 
-@status_routes.get(
-    "/{id}",
-)
-async def get_job_status(
-    id: str,
-):
-    async with tasks_lock:
-        job = tasks.get(id)
 
-    if not job:
-        raise HTTPException(
-            status_code=404,
-            detail="Job not found",
-        )
-
-    return {
-        "status": job["status"],
-        "title": job["title"],
-    }
-
-
-@status_routes.get(
-    "/completed/{id}",
-)
-async def is_job_done(
-    id: str,
-):
-    async with tasks_lock:
-        job = tasks.get(id)
-
-    if not job:
-        raise HTTPException(
-            status_code=404,
-            detail="Job not found",
-        )
-
-    return {"completed": (job["status"] == "completed")}
 
 
 app.include_router(status_routes)

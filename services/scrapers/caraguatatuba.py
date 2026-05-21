@@ -1,137 +1,269 @@
-import json
-import logging
 import re
-from typing import Literal
 from urllib.parse import quote_plus
 
-import pandas as pd
 import parsel
 import requests
 
+from models.noticia import Noticia
 from services.scrapers.scraper_base import ScraperStrategy
 
 
 class CaraguatatubaScraper(ScraperStrategy):
-    def scrape(self, search_term: str) -> list:
+    NAME = "Caraguatatuba"
 
-        # Configuração do logging
-        logging.basicConfig(
-            level=logging.INFO,
-            format="%(asctime)s - %(levelname)s - %(message)s",
-            handlers=[
-                logging.FileHandler(
-                    "logs/scraping_caraguatatuba.log", encoding="utf-8"
-                ),
-                logging.StreamHandler(),
-            ],
+    PAGINATION_XPATH = ".//ul[contains(@class,'pagination')]/li"
+    NEWS_XPATH = ".//div[contains(@id, 'latestNews')]/.//div[contains(@class,'row')]"
+    TITLE_XPATH = ".//h5/a/text()"
+    LINK_XPATH = ".//h5/a/@href"
+    DATA_XPATH = ".//span[contains(@class,'created-at')]/text()"
+    DATA_REGEX = r"\d{1,2}/\d{1,2}/20\d{2}"
+    RESUMO_XPATH = ".//div[contains(@class, 'news-text')]/p/text()"
+
+    def __get_page(
+        self,
+        url: str,
+        page: int | None = None,
+    ) -> parsel.Selector:
+
+        try:
+            self.logger.info("Buscando página %s...", page or 1)
+
+            url_final = url.format(page) if page else url.replace(r"page/{}/", "")
+
+            response = self._get(url_final)
+
+            self.logger.info(
+                "Página %s carregada com sucesso.",
+                page or 1,
+            )
+
+            return parsel.Selector(response.text)
+
+        except requests.RequestException as e:
+            self.logger.error(
+                "Erro ao buscar página %s: %s",
+                page or 1,
+                e,
+            )
+            raise
+
+    def __check_for_pagination(
+        self,
+        page: parsel.Selector,
+    ) -> int:
+
+        self.logger.info("Analisando paginação...")
+
+        pagination = page.xpath(self.PAGINATION_XPATH)
+
+        if pagination:
+            pagination_text = pagination[-3].xpath("./a/text()").get()
+
+            total = int(pagination_text.strip()) if pagination_text else 1
+
+            self.logger.info(
+                "Número total de páginas encontradas: %s",
+                total,
+            )
+
+        else:
+            self.logger.warning(
+                "Paginação não encontrada. Assumindo apenas uma página."
+            )
+
+            total = 1
+
+        return total
+
+    def __get_news(
+        self,
+        page: parsel.Selector,
+    ) -> parsel.SelectorList:
+
+        result = page.xpath(self.NEWS_XPATH)
+
+        self.logger.info(
+            "Notícias encontradas: %s",
+            len(result),
         )
 
-        # SEARCH_URL = "https://www.caraguatatuba.sp.gov.br/pmc/page/{}/?s=Educa%C3%A7%C3%A3o+Ambiental"
-        SEARCH_URL = "https://www.caraguatatuba.sp.gov.br/pmc/page/{}/?s=" + quote_plus(
-            search_term
+        return result
+
+    @staticmethod
+    def __clean_text(text: str | None) -> str:
+        return text.strip() if text else ""
+
+    def __extract_title(
+        self,
+        noticia: parsel.Selector,
+    ) -> str:
+
+        titulo = self.__clean_text(noticia.xpath(self.TITLE_XPATH).get())
+
+        self.logger.debug(
+            "Título encontrado: %s",
+            titulo,
         )
 
-        logging.info(
-            "Iniciando o processo de scraping de notícias sobre Educação Ambiental."
+        return titulo
+
+    def __extract_link(
+        self,
+        noticia: parsel.Selector,
+    ) -> str:
+
+        link = self.__clean_text(noticia.xpath(self.LINK_XPATH).get())
+
+        self.logger.debug(
+            "Link encontrado: %s",
+            link,
         )
+
+        return link
+
+    def __extract_data(
+        self,
+        noticia: parsel.Selector,
+        noticia_titulo: str,
+    ) -> tuple[str, str]:
+
+        data_list = noticia.xpath(self.DATA_XPATH).getall()
+
+        data = self.__clean_text(data_list[1]) if len(data_list) > 1 else ""
+
+        match_data = re.search(
+            self.DATA_REGEX,
+            data,
+        )
+
+        if match_data:
+            data = match_data.group()
+
+            self.logger.debug(
+                "Data encontrada: %s",
+                data,
+            )
+
+        else:
+            self.logger.warning(
+                "Data não encontrada para notícia: %s",
+                noticia_titulo,
+            )
+
+            data = "N/A"
+
+        return (
+            data,
+            data.split("/")[-1] if data != "N/A" else "N/A",
+        )
+
+    def __extract_resumo(
+        self,
+        noticia: parsel.Selector,
+    ) -> str:
+
+        resumo = self.__clean_text(noticia.xpath(self.RESUMO_XPATH).get())
+
+        self.logger.debug(
+            "Resumo encontrado: %s",
+            resumo,
+        )
+
+        return resumo
+
+    def __build_response(
+        self,
+        news_list: parsel.SelectorList,
+    ) -> list[Noticia]:
 
         resultados = []
 
-        try:
-            logging.info("Buscando a primeira página de resultados...")
-            primeira_pagina = requests.get(SEARCH_URL.replace(r"page/{}/", ""))
-            primeira_pagina.raise_for_status()
-            logging.info("Primeira página carregada com sucesso.")
-        except requests.RequestException as e:
-            logging.error(f"Erro ao buscar primeira página: {e}")
-            raise
+        self.logger.info("Iniciando extração das notícias...")
 
-        sel = parsel.Selector(primeira_pagina.text)
+        for noticia in news_list:
+            titulo = self.__extract_title(noticia)
 
-        logging.info("Analisando a paginação...")
-        pagination = sel.xpath(".//ul[contains(@class,'pagination')]/li")
-        if pagination:
-            pagination_text = pagination[-3].xpath("./a/text()").get().strip()
-            pagination = int(pagination_text)
-            logging.info(f"Número total de páginas encontradas: {pagination}")
-        else:
-            logging.warning("Paginação não encontrada. Assumindo apenas uma página.")
-            pagination = 1
-
-        noticias = sel.xpath(
-            ".//div[contains(@id, 'latestNews')]/.//div[contains(@class,'row')]"
-        )
-        logging.info(f"Notícias encontradas na primeira página: {len(noticias)}")
-
-        for i in range(2, pagination + 1):
-            try:
-                logging.info(f"Buscando página {i} de {pagination}...")
-                p = requests.get(SEARCH_URL.format(i))
-                p.raise_for_status()
-                logging.info(f"Página {i} carregada com sucesso.")
-            except requests.RequestException as e:
-                logging.error(f"Erro ao buscar página {i}: {e}")
-                continue
-
-            s = parsel.Selector(p.text)
-            news = s.xpath(
-                ".//div[contains(@id, 'latestNews')]/.//div[contains(@class,'row')]"
+            self.logger.info(
+                "Processando notícia: %s",
+                titulo,
             )
-            if news:
-                noticias.extend(news)
-                logging.debug(
-                    f"Encontradas {len(news)} notícias adicionais na página {i}"
-                )
-            else:
-                logging.warning(f"Nenhuma notícia encontrada na página {i}")
 
-        logging.info(f"Total de notícias coletadas: {len(noticias)}")
-
-        def clean_text(text: str):
-            return text.strip()
-
-        logging.info("Iniciando extração de dados das notícias...")
-        for noticia in noticias:
-            titulo = clean_text(noticia.xpath(".//h5/a/text()").get())
-            logging.info(f"Processando notícia: {titulo}")
-            logging.debug(f"Título encontrado: {titulo}")
-
-            link = clean_text(noticia.xpath(".//h5/a/@href").get())
-            logging.debug(f"Link encontrado: {link}")
-
-            data = clean_text(
-                noticia.xpath(".//span[contains(@class,'created-at')]/text()").getall()[
-                    1
-                ]
+            data, ano = self.__extract_data(
+                noticia,
+                titulo,
             )
-            match_data = re.search(r"\d{1,2}/\d{1,2}/20\d{2}", data)
-            if match_data:
-                data = match_data.group()
-                logging.debug(f"Data encontrada: {data}")
-            else:
-                logging.warning(
-                    f"Data não encontrada no formato esperado para notícia: {titulo}"
-                )
-                data = "N/A"
-
-            resumo = clean_text(
-                noticia.xpath(".//div[contains(@class, 'news-text')]/p/text()").get()
-            )
-            logging.debug(f"Resumo encontrado: {resumo}")
 
             resultados.append(
-                {
-                    "titulo": titulo,
-                    "data": data,
-                    "ano": data.split("/")[-1] if data != "N/A" else "N/A",
-                    "link": link,
-                    "resumo": resumo,
-                }
+                Noticia(
+                    titulo=titulo or "Sem título",
+                    data=data,
+                    ano=ano,
+                    link=self.__extract_link(noticia),
+                    resumo=self.__extract_resumo(noticia),
+                    origem=self.NAME,
+                )
             )
-            logging.debug(f"Notícia '{titulo}' adicionada aos resultados.")
 
-        logging.info(
-            f"Extração concluída. Total de notícias processadas: {len(resultados)}"
+            self.logger.debug(
+                "Notícia '%s' adicionada.",
+                titulo,
+            )
+
+        return resultados
+
+    def scrape(
+        self,
+        search_term: str,
+    ) -> list[Noticia]:
+
+        search_url = "https://www.caraguatatuba.sp.gov.br/pmc/page/{}/?s=" + quote_plus(
+            search_term
+        )
+
+        self.logger.info(
+            "Iniciando scraping sobre '%s'",
+            search_term,
+        )
+
+        primeira_pagina = self.__get_page(search_url)
+
+        pagination = self.__check_for_pagination(primeira_pagina)
+
+        noticias = self.__get_news(primeira_pagina)
+
+        for i in range(2, pagination + 1):
+            page = self.__get_page(
+                search_url,
+                i,
+            )
+
+            news = self.__get_news(page)
+
+            if news:
+                noticias.extend(news)
+
+                self.logger.debug(
+                    "%s notícias encontradas na página %s",
+                    len(news),
+                    i,
+                )
+
+            else:
+                self.logger.warning(
+                    "Nenhuma notícia encontrada na página %s",
+                    i,
+                )
+
+        self.logger.info(
+            "Total de notícias coletadas: %s",
+            len(noticias),
+        )
+
+        resultados = self.__build_response(noticias)
+
+        self.logger.info(
+            "Scraping concluído. %s notícias processadas.",
+            len(resultados),
         )
 
         return resultados

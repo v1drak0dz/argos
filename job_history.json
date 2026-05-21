@@ -1,0 +1,26 @@
+{
+    "d343e75c-3d5e-4b84-b410-a5cfddbe1c6b": {
+        "status": "failed",
+        "parameters": {
+            "sites": [
+                "caraguatatuba"
+            ]
+        },
+        "title": "Educação Ambiental",
+        "id": 1,
+        "job_hash": "d343e75c-3d5e-4b84-b410-a5cfddbe1c6b",
+        "data": [],
+        "error": "ScraperService.process_scraper() takes 3 positional arguments but 4 were given"
+    },
+    "158df5fd-6848-4010-81a5-94b7621bc36e": {
+        "status": "failed",
+        "parameters": {
+            "sites": [
+                "caraguatatuba"
+            ]
+        },
+        "title": "Educação Ambiental",
+        "id": 2,
+        "job_hash": "158df5fd-6848-4010-81a5-94b7621bc36e",
+        "data": [
+            

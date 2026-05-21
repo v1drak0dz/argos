@@ -1,2 +1,1 @@
-STORAGE_FILE = "job_history.json"
 MAX_SIMULTANEOUS_JOBS = 2

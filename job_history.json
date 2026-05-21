@@ -1,19 +1,9 @@
 {
-    "d343e75c-3d5e-4b84-b410-a5cfddbe1c6b": {
-        "status": "failed",
-        "parameters": {
-            "sites": [
-                "caraguatatuba"
-            ]
-        },
+    "4c1415a0-96cf-4490-a2d7-c0001fc9bbf7": {
         "title": "Educação Ambiental",
-        "id": 1,
-        "job_hash": "d343e75c-3d5e-4b84-b410-a5cfddbe1c6b",
-        "data": [],
-        "error": "ScraperService.process_scraper() takes 3 positional arguments but 4 were given"
-    },
-    "c96431b9-7c1e-4032-8575-3a5af84ffe10": {
-        "title": "Educação Ambiental",
+        "description": "Um apunhalado de informações sobre educação ambiental para fazer uma analise",
+        "tags": "educação,ambiental,artigo",
+        "date": "2026-05-21 16:43:54",
         "status": "completed",
         "parameters": {
             "sites": [
@@ -21,8 +11,8 @@
             ],
             "profundidade": 3
         },
-        "id": 2,
-        "job_hash": "c96431b9-7c1e-4032-8575-3a5af84ffe10",
+        "job_id": 1,
+        "job_hash": "4c1415a0-96cf-4490-a2d7-c0001fc9bbf7",
         "data": [
             {
                 "titulo": "Estudantes da rede municipal participam de ações de educação ambiental durante gincana “Descarte Certo de Resíduos Recicláveis”",

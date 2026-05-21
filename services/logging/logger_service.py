@@ -1,5 +1,8 @@
 import logging
+import os
 from pathlib import Path
+
+from core.paths import LOGS_DIR
 
 
 class LoggerService:
@@ -9,6 +12,8 @@ class LoggerService:
         log_file: str,
         level: int = logging.INFO,
     ) -> logging.Logger:
+
+        os.makedirs(LOGS_DIR, exist_ok=True)
 
         logger = logging.getLogger(name)
 

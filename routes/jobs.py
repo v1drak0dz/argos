@@ -1,4 +1,5 @@
 import asyncio
+import datetime
 import uuid
 
 from fastapi import APIRouter, HTTPException
@@ -17,6 +18,7 @@ async def create_job(
     job: JobRequest,
 ):
     job_hash = str(uuid.uuid4())
+    now = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
 
     async with tasks_lock:
         job_id = (
@@ -29,9 +31,12 @@ async def create_job(
 
         tasks[job_hash] = {
             "title": job.title,
+            "description": job.description,
+            "tags": job.tags,
+            "date": now,
             "status": "created",
             "parameters": {"sites": job.sites, "profundidade": job.profundidade},
-            "id": job_id,
+            "job_id": job_id,
             "job_hash": job_hash,
             "data": [],
             "error": None,
@@ -61,6 +66,7 @@ async def create_job(
         "job_hash": job_hash,
         "job_id": job_id,
         "data": [],
+        "date": now,
     }
 
 
@@ -73,7 +79,7 @@ async def get_jobs():
         jobs = list(tasks.values())
 
     jobs.sort(
-        key=lambda x: x["id"],
+        key=lambda x: x["job_id"],
         reverse=True,
     )
 
@@ -97,3 +103,14 @@ async def get_job(
         )
 
     return job
+
+
+@jobs_routes.get("/{id}/export")
+async def get_parameters(id: str):
+    async with tasks_lock:
+        job = tasks.get(id)
+
+    if not job:
+        raise HTTPException(status_code=404, detail="Job not found")
+
+    return {"titulo": job["title"], "parameters": job["parameters"]}

@@ -1,7 +1,7 @@
 import json
 import os
 
-from core.config import STORAGE_FILE
+from core.paths import STORAGE_FILE
 
 
 def load_tasks():

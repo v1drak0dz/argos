@@ -1,6 +1,7 @@
-from core.state import tasks_lock, job_semaphore, scraper_service, tasks
 import asyncio
 from dataclasses import asdict
+
+from core.state import job_semaphore, scraper_service, tasks, tasks_lock
 from services.task_storage import save_tasks_snapshot
 
 
@@ -49,8 +50,6 @@ async def run_job(
             )
 
             raise
-
-
 
 
 async def persist_tasks():

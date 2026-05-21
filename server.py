@@ -1,14 +1,12 @@
-
 import uvicorn
-from fastapi import  FastAPI, Request
+from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from services.task_storage import load_tasks
 from routes.jobs import jobs_routes
 from routes.status import status_routes
-
+from services.task_storage import load_tasks
 
 load_tasks()
 

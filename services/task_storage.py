@@ -3,6 +3,7 @@ import os
 
 from core.config import STORAGE_FILE
 
+
 def load_tasks():
     global tasks
 

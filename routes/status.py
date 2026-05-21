@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException
-from core.state import tasks_lock, tasks
+
+from core.state import tasks, tasks_lock
 
 status_routes = APIRouter(prefix="/status")
 

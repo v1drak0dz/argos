@@ -1,14 +1,11 @@
 import asyncio
-
 import uuid
 
 from fastapi import APIRouter, HTTPException
 
+from core.state import background_tasks, tasks, tasks_lock
 from models.job import JobRequest, JobResponse
-from core.state import tasks, tasks_lock, background_tasks
 from services.job_service import persist_tasks, run_job
-
-
 
 jobs_routes = APIRouter(prefix="/jobs")
 

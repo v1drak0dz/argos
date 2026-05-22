@@ -23,14 +23,12 @@ class LoggerService:
 
         logger.setLevel(level)
 
-        Path("logs").mkdir(exist_ok=True)
-
         formatter = logging.Formatter(
             "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
         )
 
         file_handler = logging.FileHandler(
-            f"logs/{log_file}",
+            f"{LOGS_DIR}/{log_file}",
             encoding="utf-8",
         )
 

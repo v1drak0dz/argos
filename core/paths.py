@@ -14,3 +14,9 @@ STATIC_DIR = os.path.join(BASE_DIR, "static")
 TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
 STORAGE_FILE = os.path.join(BASE_DIR, "job_history.json")
 LOGS_DIR = os.path.join(BASE_DIR, "logs")
+
+print(
+    f"Checking paths BASE_DIR:{BASE_DIR}, STORAGE_FILE:{STORAGE_FILE}",
+    BASE_DIR,
+    STATIC_DIR,
+)

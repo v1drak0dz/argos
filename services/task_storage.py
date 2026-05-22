@@ -4,11 +4,9 @@ import os
 from core.paths import STORAGE_FILE
 
 
-def load_tasks():
-    global tasks
-
+def load_tasks(tasks: dict):
     if not os.path.exists(STORAGE_FILE):
-        tasks = {}
+        tasks.clear()
         return
 
     try:
@@ -17,13 +15,16 @@ def load_tasks():
             "r",
             encoding="utf-8",
         ) as f:
-            tasks = json.load(f)
+            loaded_tasks = json.load(f)
+
+        tasks.clear()
+        tasks.update(loaded_tasks)
 
     except (
         json.JSONDecodeError,
         OSError,
     ):
-        tasks = {}
+        tasks.clear()
 
 
 def save_tasks_snapshot(

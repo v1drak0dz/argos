@@ -4,12 +4,13 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from core.paths import STATIC_DIR, TEMPLATES_DIR
+from core.state import tasks
 from core.version import APP_VERSION
 from routes.jobs import jobs_routes
 from routes.status import status_routes
 from services.task_storage import load_tasks
 
-load_tasks()
+load_tasks(tasks)
 
 app = FastAPI()
 
